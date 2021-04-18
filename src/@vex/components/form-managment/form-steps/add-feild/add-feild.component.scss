@@ -1,0 +1,36 @@
+$base-color: #002F87 ;
+$secondary-color: #EB6B16;
+form { 
+    overflow: scroll;
+    height: 400px;   
+    background-color: #fff;
+}
+    header {
+    background-color: $base-color;
+    color: #fff;
+    padding: 15px 0;
+}
+
+.form-select { 
+    width: 90%;
+    outline: none;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    padding: 16px 12px;
+    cursor: pointer;
+    width: 98.5%;
+    .form-option {
+        padding: 15px;
+    }
+
+}
+
+.form-control {
+    width: 90%;
+}
+
+.row-flex > div {
+    width: 45%;
+    padding-right: 21px;
+    margin: 10px 0;
+}
