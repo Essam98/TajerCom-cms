@@ -105,6 +105,12 @@ export class FormStepsComponent implements OnInit {
       swipeToClose: true,
     });
     (await modal).onDidDismiss().then(result => {
+      if (result.data != undefined) {
+         console.log(this.allSteps); 
+         console.log(this.stepFields); 
+        //  console.log(this.stepFields); 
+      } 
+
       result.data != undefined ? this.stepFields.push(result.data) : null;
     })
     return (await modal).present(); 
