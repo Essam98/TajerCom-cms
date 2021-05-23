@@ -1,0 +1,46 @@
+$primaryColor: #2BA4DD;
+$secondaryBlackColor: #3C3C3C;
+$secondaryPinkColor: #B51F71;
+$secondaryLightBlueColor: #1070B7;
+$secondaryDarkBlueColor: #2D3387;
+$secondaryWhiteColor: #f1f1f1;
+
+.headerPage {
+    width: 100%;
+    height: 200px;
+    background-color: $primaryColor;
+
+    h2 {    
+        color: #fff;
+        font-size: 24px;
+        height: 122px;
+    }
+}
+
+.header-table {
+    width: 100%;
+    height: 70px;
+    background-color: $secondaryWhiteColor;
+
+    h5 {
+        padding-top: 25px;
+    }
+
+    .add-category {
+        button {
+            background-color: $primaryColor;
+            color: $secondaryWhiteColor;
+            height: 50px;
+            margin-top: 15px;
+            border-radius: 50%;
+            padding: 0 17px;
+            font-weight: 900;
+        }
+    }
+}
+
+table {
+    width: 100%;
+
+
+}                

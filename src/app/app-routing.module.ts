@@ -3,9 +3,8 @@ import { RouterModule } from '@angular/router';
 import { CustomLayoutComponent } from './custom-layout/custom-layout.component';
 import { VexRoutes } from '../@vex/interfaces/vex-route.interface';
 import { AuthGuardService } from './auth-guard.service';
-import { FormManagmentComponent } from '../@vex/components/form-managment/form-managment/form-managment.component';
-import { FormStepsComponent } from '../@vex/components/form-managment/form-steps/form-step/form-steps.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CategoryComponent } from 'src/@vex/categoryManagement/categoryTable/category.component';
 
 const routes: VexRoutes = [
   {
@@ -74,6 +73,10 @@ const routes: VexRoutes = [
             }
           },
           {
+            path: 'category',
+            component: CategoryComponent
+          },
+          {
             path: 'aio-table',
             loadChildren: () => import('./pages/apps/aio-table/aio-table.module').then(m => m.AioTableModule),
           },
@@ -88,14 +91,6 @@ const routes: VexRoutes = [
           {
             path: 'editor',
             loadChildren: () => import('./pages/apps/editor/editor.module').then(m => m.EditorModule),
-          },
-          {
-            path: 'form-managment',
-            component: FormManagmentComponent
-          },
-          {
-            path: 'form-steps',
-            component: FormStepsComponent
           },
         ]
       },

@@ -115,6 +115,12 @@ export class AppComponent {
         children: [
           {
             type: 'link',
+            label: 'Category',
+            route: '/apps/category',
+            icon: icAssigment
+          },
+          {
+            type: 'link',
             label: 'All-In-One Table',
             route: '/apps/aio-table',
             icon: icAssigment

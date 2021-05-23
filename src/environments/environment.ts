@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ApiURL : 'http://66.45.234.221/api/api/',
+  ApiURL : 'https://tajerproject-default-rtdb.firebaseio.com/',
 };
 
 /*

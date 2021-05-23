@@ -7,32 +7,34 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VexModule } from '../@vex/vex.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
-import { FormManagmentComponent } from '../@vex/components/form-managment/form-managment/form-managment.component';
-import { FormStepsComponent } from '../@vex/components/form-managment/form-steps/form-step/form-steps.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddStepComponent } from '../@vex/components/form-managment/form-steps/add-step/add-step.component';
 import { IonicModule } from '@ionic/angular';
-// import { StepsService } from 'src/@vex/services/steps.service';
-import { AddFeildComponent } from '../@vex/components/form-managment/form-steps/add-feild/add-feild.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CategoryComponent } from '../@vex/categoryManagement/categoryTable/category.component';
+import { AddCategoryComponent } from '../@vex/categoryManagement/add-category/add-category.component';
+import { UpdateCategoryComponent } from '../@vex/categoryManagement/update-category/update-category.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormManagmentComponent,
-    FormStepsComponent,
-    AddStepComponent,
-    AddFeildComponent,
+    CategoryComponent,
+    AddCategoryComponent,
+    UpdateCategoryComponent,
   ],
   entryComponents: [
-    AddStepComponent
+    AddCategoryComponent,
   ],
   imports: [
+    MatFormFieldModule,
     FormsModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot(),  
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
@@ -42,13 +44,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatSelectModule, 
     MatInputModule, 
     NgSelectModule,
+    MatTableModule,
     // Vex
     VexModule,
     CustomLayoutModule
   ],
   providers: [
-    // StepsService,
-    FormStepsComponent
   ],
   bootstrap: [AppComponent]
 })
