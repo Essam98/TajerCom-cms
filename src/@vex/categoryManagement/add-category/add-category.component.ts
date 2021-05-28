@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingController, ModalController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { CategoryService } from 'src/@vex/services/category.service';
 import { Category } from 'src/app/services/modal/category';
 
@@ -14,8 +17,11 @@ export class AddCategoryComponent implements OnInit {
   categoryForm: FormGroup;
   url: string;
   file: File;
-
+  path
   constructor(
+    private matSnackBar: MatSnackBar,
+    private loadingController: LoadingController,
+    private angularFireStorage: AngularFireStorage,
     private categoryService: CategoryService,
     private modalController: ModalController) { }
 
@@ -23,7 +29,7 @@ export class AddCategoryComponent implements OnInit {
     this.categoryForm = new FormGroup({
       englishName: new FormControl('', Validators.required),
       arabicName: new FormControl(''),
-      image: new FormControl(this.file),
+      imageUrl: new FormControl(),
     })
   }
 
@@ -42,20 +48,45 @@ export class AddCategoryComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  createCategory(values: Category) {
+  async createCategory(category: Category) {
 
     if(this.categoryForm.invalid) {
       return;
-    }
-    values.image = this.file.name
-    values.test = "test"
+    } 
 
-    console.log(values);
+    const loading = this.loadingController.create({
+      message: "Please Wait"
+    });
+    (await loading).present();
     
-    this.categoryService.createCategory(values).subscribe(result => {
-      this.dismissModal();
+    let filePath = `${category.englishName}-${this.file.name}`; 
+    var fileRef = this.angularFireStorage.ref(filePath);
+    
+    this.angularFireStorage.upload(filePath, this.file).snapshotChanges().pipe(finalize(() => {
+      fileRef.getDownloadURL().subscribe(async url => {
+        category['imageUrl'] = url;
+        (await loading).dismiss();
+        this.storeCategory(category);
+      })
     })
+    ).subscribe();
   }
+
+  async storeCategory(category: Category) {
+
+    const loadingController = this.loadingController.create({
+      message: "Please Wait"
+    })
+    ;(await loadingController).present();    
+    await this.categoryService.createCategory(category).subscribe(() => {
+      this.dismissModal();
+      this.matSnackBar.open("Add Successfuly", '', { duration: 2000 })
+    })
+
+    ;(await loadingController).dismiss();
+  }
+
+
 
 
 

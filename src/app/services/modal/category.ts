@@ -2,7 +2,7 @@ export class Category {
     id?: string;
     englishName?: string;
     arabicName?: string;
-    image?: File
+    imageUrl?: string;
     childrenProducts: Product[];
 }
 

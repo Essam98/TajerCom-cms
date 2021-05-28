@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, NavParams } from '@ionic/angular';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoadingController, ModalController, NavParams } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { CategoryService } from 'src/@vex/services/category.service';
 import { Category } from 'src/app/services/modal/category';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'vex-update-category',
@@ -14,19 +19,20 @@ export class UpdateCategoryComponent implements OnInit {
 
   categoryForm: FormGroup;
   category: Category;
-
   url: string;
+  file: File;
+  newImageUrl: string;
 
   constructor(
+    private loadingController: LoadingController,
+    private storage: AngularFireStorage,
+    private _snackBar: MatSnackBar,
     private navParams: NavParams,
     private categoryService: CategoryService,
     private modalController: ModalController) {
 
       this.category = this.navParams.data.category;
-      
-      console.log(this.category);
-
-      this.url = this.category.image
+      this.url = this.category.imageUrl
     }
 
   ngOnInit() {
@@ -35,31 +41,71 @@ export class UpdateCategoryComponent implements OnInit {
       englishName: new FormControl(this.category.englishName, Validators.required),
       arabicName: new FormControl(this.category.arabicName),
     })
-
-    
   }
 
-  getImageUrl(imageName: string){
-    let image = '';
-    if(imageName){
-      // image = 'http://66.45.234.221/api/api/File/Get?name=' + imageName;
-      image = environment.ApiURL + 'createCategory/' + imageName;
-    }
-    return image;
-  }
-  
   dismissModal() {
     this.modalController.dismiss();
   }
 
-  updateCategory(values: Category) {
+  async updateCategory(category: Category) {
 
     if(this.categoryForm.invalid) {
+      this._snackBar.open("Please fill all required inputs", '', { duration: 2000 })
       return;
     }
-    this.categoryService.updateCategory(values).subscribe(result => {
-      this.dismissModal();
+    const loading = this.loadingController.create({
+      message: "Please Wait"
     })
+    await (await loading).present();
+
+    if (this.newImageUrl) {
+
+      this.storage.storage.refFromURL(this.category['imageUrl']).delete();
+      
+      setTimeout(s => {
+        let filePath = `${category.englishName}-${this.file.name}`; 
+        var fileRef = this.storage.ref(filePath);
+        
+        this.storage.upload(filePath, this.file).snapshotChanges().pipe(finalize(() => {
+          fileRef.getDownloadURL().subscribe( async newUrl => {
+            category['imageUrl'] = newUrl;
+          })
+        })
+        ).subscribe();
+        
+        setTimeout(async s => {
+          this.categoryService.updateCategory(category).subscribe(async result => {
+            
+            await (await loading).dismiss();
+            this.dismissModal();
+            this._snackBar.open("Update Successfully", '', { duration: 2000 })
+          })
+          await (await loading).dismiss();
+        },2500)
+      },0)
+    } else {
+      setTimeout(async s => {
+        this.categoryService.updateCategory(category).subscribe(async result => {
+          
+          await (await loading).dismiss();
+          this.dismissModal();
+          this._snackBar.open("Update Successfully", '', { duration: 2000 })
+        })
+        await (await loading).dismiss();
+      },0)
+    }
   }
+
+  getFileUploder(e) {
+    if(e.target.files){
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0])
+      this.file = e.target.files[0];
+      reader.onload = (event: any) => {
+        this.newImageUrl = event.target.result
+      }
+    }
+  }
+  
 
 }

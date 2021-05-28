@@ -18,7 +18,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CategoryComponent } from '../@vex/categoryManagement/categoryTable/category.component';
 import { AddCategoryComponent } from '../@vex/categoryManagement/add-category/add-category.component';
 import { UpdateCategoryComponent } from '../@vex/categoryManagement/update-category/update-category.component';
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -41,13 +45,27 @@ import { UpdateCategoryComponent } from '../@vex/categoryManagement/update-categ
     BrowserAnimationsModule,
     MatCheckboxModule,
     HttpClientModule,
+    MatSnackBarModule,
     MatSelectModule, 
     MatInputModule, 
     NgSelectModule,
     MatTableModule,
+    MatAutocompleteModule,
     // Vex
     VexModule,
-    CustomLayoutModule
+    CustomLayoutModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyB_9jnfGdbamPx6f1kCfcdnYm5fJZ7F4G0",
+      authDomain: "tajerproject.firebaseapp.com",
+      databaseURL: "https://tajerproject-default-rtdb.firebaseio.com",
+      projectId: "tajerproject",
+      storageBucket: "tajerproject.appspot.com",
+      messagingSenderId: "786110787051",
+      appId: "1:786110787051:web:88831b5afdb62e6f1bfdae",
+      measurementId: "G-B1GMKL5WC8"
+    }),
+    // AngularFireDatabase
   ],
   providers: [
   ],

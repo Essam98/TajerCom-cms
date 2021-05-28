@@ -1,6 +1,6 @@
 <header class="headerModal d-flex justify-content-between px-4 py-3  ">
     <div class="titleModal">
-        <h2> New Category </h2>
+        <h2> {{category?.englishName}} </h2>
     </div>
     <div class="dismissModal">
         <span (click)="dismissModal()" class="bi bi-x-lg pt-5"></span>
@@ -19,7 +19,7 @@
                     <mat-form-field class="w-100 mt-2">
                         <mat-label>English Title</mat-label>
                         <span matPrefix> <i class="bi bi-badge-ar-fill"></i> &nbsp; </span>
-                        <input matInput formControlName="englishName">
+                        <input matInput autofocus formControlName="englishName">
                     </mat-form-field>
                 </div>
 
@@ -32,17 +32,26 @@
                     </mat-form-field>
                 </div>
 
-                <div class="w-25 h-25">
-                    <img [src]="getImageUrl(url)" alt="">
+                <div class="container">
+                    <div class="w-100">
+                        <input type="file" (change)="getFileUploder($event)">
+                    </div>
+                    
+                    <div class="pl-3 w-50 h-75 mt-2" *ngIf="!newImageUrl">
+                        <img [src]="url" width="75%" style="height: 100% !important" alt="connot access to the image">
+                    </div>
+
+                    <div class="pl-3 w-50 h-75 mt-2 " *ngIf="newImageUrl">
+                        <img [src]="newImageUrl" width="75%" style="height: 100% !important;" alt="connot access to the image">
+                    </div>
                 </div>
-                
             </div>
         </div>
     </form>
 
     <div class="container buttonsModal w-100 text-right ">
         <button (click)="dismissModal()" class="btn mr-2 cancel"> cancel </button>
-        <button (click)="updateCategory(categoryForm.value)" class="btn  create-category"> create category </button>
+        <button (click)="updateCategory(categoryForm.value)" class="btn  create-category"> update category </button>
     </div>
     
 
