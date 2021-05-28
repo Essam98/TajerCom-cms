@@ -5,7 +5,7 @@ export const chats: Chat[] = [
   {
     id: 1,
     imageSrc: 'assets/img/avatars/1.jpg',
-    from: 'David Smith',
+    from: 'Ashraf Mansour',
     status: 'Online',
     message: 'You did great with the last presentation, looking forward to working with you on the next project.',
     unreadCount: 5,

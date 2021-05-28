@@ -4,7 +4,8 @@ import { CustomLayoutComponent } from './custom-layout/custom-layout.component';
 import { VexRoutes } from '../@vex/interfaces/vex-route.interface';
 import { AuthGuardService } from './auth-guard.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CategoryComponent } from 'src/@vex/categoryManagement/categoryTable/category.component';
+import { CategoryComponent } from 'src/@vex/components/categories/categoryTable/category.component';
+import { ProductsTableComponent } from 'src/@vex/components/products/products-table/products-table.component';
 
 const routes: VexRoutes = [
   {
@@ -75,6 +76,10 @@ const routes: VexRoutes = [
           {
             path: 'category',
             component: CategoryComponent
+          },
+          {
+            path: 'products',
+            component: ProductsTableComponent
           },
           {
             path: 'aio-table',

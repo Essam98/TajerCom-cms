@@ -15,14 +15,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CategoryComponent } from '../@vex/categoryManagement/categoryTable/category.component';
-import { AddCategoryComponent } from '../@vex/categoryManagement/add-category/add-category.component';
-import { UpdateCategoryComponent } from '../@vex/categoryManagement/update-category/update-category.component';
+import { CategoryComponent } from '../@vex/components/categories/categoryTable/category.component';
+import { AddCategoryComponent } from '../@vex/components/categories/add-category/add-category.component';
+import { UpdateCategoryComponent } from '../@vex/components/categories/update-category/update-category.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { ProductsTableComponent } from '../@vex/components/products/products-table/products-table.component';
+import { AddProductComponent } from '../@vex/components/products/add-product/add-product.component';
+import { UpdateProductComponent } from '../@vex/components/products/update-product/update-product.component';
 
 
 @NgModule({
@@ -31,9 +34,15 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     CategoryComponent,
     AddCategoryComponent,
     UpdateCategoryComponent,
+    ProductsTableComponent,
+    AddProductComponent,
+    UpdateProductComponent,
   ],
   entryComponents: [
     AddCategoryComponent,
+    UpdateCategoryComponent,
+    AddProductComponent,
+    UpdateProductComponent,
   ],
   imports: [
     MatFormFieldModule,

@@ -115,9 +115,15 @@ export class AppComponent {
         children: [
           {
             type: 'link',
-            label: 'Category',
+            label: 'Category Management',
             route: '/apps/category',
             icon: icAssigment
+          },
+          {
+            type: 'link',
+            label: 'Products Management',
+            route: '/apps/products',
+            icon: icViewCompact
           },
           {
             type: 'link',

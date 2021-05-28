@@ -15,7 +15,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 })
 export class CategoryComponent implements OnInit {
 
-  displayedColumns: string[] = ['image', 'arabicName', 'englishName', 'action'];
+  displayedColumns: string[] = ['image', 'arabicName', 'englishName', 'childLength', 'action'];
   dataSource;
 
   constructor(
