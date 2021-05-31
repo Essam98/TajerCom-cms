@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoadingController, ModalController } from '@ionic/angular';
@@ -8,12 +8,11 @@ import { CategoryService } from 'src/@vex/services/category.service';
 import { Category } from 'src/app/services/modal/category';
 
 @Component({
-  selector: 'vex-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.scss']
+  selector: 'vex-add-sub-category',
+  templateUrl: './add-sub-category.component.html',
+  styleUrls: ['./add-sub-category.component.scss']
 })
-export class AddCategoryComponent implements OnInit {
-
+export class AddSubCategoryComponent implements OnInit {
   categoryForm: FormGroup;
   url: string;
   file: File;
@@ -85,6 +84,7 @@ export class AddCategoryComponent implements OnInit {
 
     ;(await loadingController).dismiss();
   }
+
 
 
 

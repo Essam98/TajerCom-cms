@@ -115,16 +115,23 @@ export class AppComponent {
         children: [
           {
             type: 'link',
-            label: 'Category Management',
-            route: '/apps/category',
+            label: 'Main Category Management',
+            route: '/apps/main-category-management',
             icon: icAssigment
           },
           {
             type: 'link',
             label: 'Products Management',
-            route: '/apps/products',
+            route: '/apps/product-management',
             icon: icViewCompact
           },
+          {
+            type: 'link',
+            label: 'Sub Category Management',
+            route: '/apps/sub-category-management',
+            icon: icContactSupport
+          },
+
           {
             type: 'link',
             label: 'All-In-One Table',
@@ -184,12 +191,6 @@ export class AppComponent {
             type: 'link',
             label: 'Mailbox',
             route: '/apps/mail',
-            icon: icMail,
-          },
-          {
-            type: 'link',
-            label: 'Form Managment',
-            route: '/apps/form-managment',
             icon: icMail,
           },
           {

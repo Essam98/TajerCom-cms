@@ -1,0 +1,58 @@
+<header class="headerModal d-flex justify-content-between px-4 py-3  ">
+    <div class="titleModal">
+        <h2> Add New Product </h2>
+    </div>
+    <div class="dismissModal">
+        <span (click)="dismissModal()" class="bi bi-x-lg pt-5"></span>
+    </div>
+</header>
+
+<main>
+
+    <form [formGroup]="productForm" ngForm="form">
+
+        <div class="container">
+            <div class="row">
+
+                <!-- English Title Category -->
+                <div class="col-md-12">
+                    <mat-form-field class="w-100 mt-2">
+                        <mat-label>English Title</mat-label>
+                        <span matPrefix> <i class="bi bi-badge-ar-fill"></i> &nbsp; </span>
+                        <input matInput autofocus formControlName="englishName">
+                    </mat-form-field>
+                </div>
+
+                <!-- Arabic Title Category -->
+                <div class="col-md-12">
+                    <mat-form-field class="w-100 mt-2">
+                        <mat-label>Arabic Title</mat-label>
+                        <span matPrefix> <i class="bi bi-badge-ar-fill"></i> &nbsp; </span>
+                        <input matInput formControlName="arabicName">
+                    </mat-form-field>
+                </div>
+
+                <!-- Arabic Title Category -->
+                <div class="col-md-12">
+                    <input (change)="getFileUploader($event)" type="file">
+
+                    <div class="w-25 h-25" *ngIf="imageUrl">
+                        <img [src]="imageUrl" alt="">
+                    </div>
+                </div>
+
+
+                
+            </div>
+        </div>
+    </form>
+
+    <div class="container buttonsModal w-100 text-right ">
+        <button (click)="dismissModal()" class="btn mr-2 cancel"> cancel </button>
+        <button (click)="createNewProduct(productForm.value)" class="btn  create-category"> create product </button>
+    </div>
+    
+
+</main>
+
+

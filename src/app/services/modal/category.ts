@@ -8,11 +8,12 @@ export class Category {
 
 export class Product {
     id?: string;
-    englishTitle?: string;
-    arabicTitle?: string;
+    englishName?: string;
+    arabicName?: string;
     englishDescription?: string;
     arabicDescription?: string;
+    imageUrl?: string;
     price?: number;
-    totalQuantity?: number;
-    parentId?: string;
+    totalQuantity?: number; //optional
+    parentId?: number;
 }

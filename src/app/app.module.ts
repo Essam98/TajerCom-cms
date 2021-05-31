@@ -23,9 +23,12 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { ProductsTableComponent } from '../@vex/components/products/products-table/products-table.component';
-import { AddProductComponent } from '../@vex/components/products/add-product/add-product.component';
-import { UpdateProductComponent } from '../@vex/components/products/update-product/update-product.component';
+import { ProductListComponent } from '../@vex/components/products_Management/product-list/product-list.component';
+import { AddProductComponent } from 'src/@vex/components/products_Management/add-product/add-product.component';
+import { UpdateProductComponent } from 'src/@vex/components/products_Management/update-product/update-product.component';
+import { SubCategoryListComponent } from '../@vex/components/Sub_Category_Management/sub-category-list/sub-category-list.component';
+import { AddSubCategoryComponent } from 'src/@vex/components/Sub_Category_Management/add-sub-category/add-sub-category.component';
+import { UpdateSubCategoryComponent } from 'src/@vex/components/Sub_Category_Management/update-sub-category/update-sub-category.component';
 
 
 @NgModule({
@@ -34,15 +37,17 @@ import { UpdateProductComponent } from '../@vex/components/products/update-produ
     CategoryComponent,
     AddCategoryComponent,
     UpdateCategoryComponent,
-    ProductsTableComponent,
+    ProductListComponent,
     AddProductComponent,
-    UpdateProductComponent,
+    SubCategoryListComponent,
+    AddSubCategoryComponent,
+    UpdateSubCategoryComponent,
   ],
   entryComponents: [
     AddCategoryComponent,
     UpdateCategoryComponent,
     AddProductComponent,
-    UpdateProductComponent,
+    UpdateProductComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -74,7 +79,6 @@ import { UpdateProductComponent } from '../@vex/components/products/update-produ
       appId: "1:786110787051:web:88831b5afdb62e6f1bfdae",
       measurementId: "G-B1GMKL5WC8"
     }),
-    // AngularFireDatabase
   ],
   providers: [
   ],
