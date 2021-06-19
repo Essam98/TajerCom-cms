@@ -1,6 +1,6 @@
 <header class="headerModal d-flex justify-content-between px-4 py-3  ">
     <div class="titleModal">
-        <h2> New Category </h2>
+        <h2> New Sub Category </h2>
     </div>
     <div class="dismissModal">
         <span (click)="dismissModal()" class="bi bi-x-lg pt-5"></span>
@@ -9,7 +9,7 @@
 
 <main>
 
-    <form [formGroup]="categoryForm" ngForm="form">
+    <form [formGroup]="subCategoryForm" ngForm="form">
 
         <div class="container">
             <div class="row">
@@ -32,24 +32,29 @@
                     </mat-form-field>
                 </div>
 
+                <!-- Parent Sub Category for Product -->
+                <div class="col-md-12 my-3">
+                    <select  placeholder="Choose Parent Category" class=" form-control" formControlName="parentCategory" name="food">
+                        <option *ngFor="let category of Categories" [value]="category._id">
+                        {{ category.englishNameCategory }}
+                        </option>
+                    </select>
+                </div>
+
                 <!-- Arabic Title Category -->
                 <div class="col-md-12">
-                    <input (change)="getFileUploder($event)" type="file">
-
+                    <input (change)="getFileUploader($event)" type="file">
                     <div class="w-25 h-25" *ngIf="url">
                         <img [src]="url" alt="">
                     </div>
                 </div>
-
-
-                
             </div>
         </div>
     </form>
 
     <div class="container buttonsModal w-100 text-right ">
         <button (click)="dismissModal()" class="btn mr-2 cancel"> cancel </button>
-        <button (click)="createCategory(categoryForm.value)" class="btn  create-category"> create category </button>
+        <button (click)="createSubCategory(subCategoryForm.value)" class="btn  create-category"> create category </button>
     </div>
     
 

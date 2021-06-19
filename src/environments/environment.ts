@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  ApiURL : 'https://tajerproject-default-rtdb.firebaseio.com/',
+  ApiURL : '',
+  ApiNode: "http://localhost:5000/api/tajer/"
 };
 
 /*

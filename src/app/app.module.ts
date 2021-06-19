@@ -68,17 +68,6 @@ import { UpdateSubCategoryComponent } from 'src/@vex/components/Sub_Category_Man
     // Vex
     VexModule,
     CustomLayoutModule,
-    AngularFireStorageModule,
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyB_9jnfGdbamPx6f1kCfcdnYm5fJZ7F4G0",
-      authDomain: "tajerproject.firebaseapp.com",
-      databaseURL: "https://tajerproject-default-rtdb.firebaseio.com",
-      projectId: "tajerproject",
-      storageBucket: "tajerproject.appspot.com",
-      messagingSenderId: "786110787051",
-      appId: "1:786110787051:web:88831b5afdb62e6f1bfdae",
-      measurementId: "G-B1GMKL5WC8"
-    }),
   ],
   providers: [
   ],

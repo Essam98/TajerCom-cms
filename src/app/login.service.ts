@@ -7,9 +7,13 @@ import { environment } from 'src/environments/environment';
 })
 export class LoginService {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   login(login: any) {
-    return this.http.post<any>(environment.ApiURL+"User/login", login);
+    if (login.email == "ash_tajer@tajer.com" && login.password == "a$hraf") {
+      return true;
+    } else {
+      return false
+    }
   }
 }

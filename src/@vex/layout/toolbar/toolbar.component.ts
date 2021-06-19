@@ -18,6 +18,7 @@ import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
 import { MegaMenuComponent } from '../../components/mega-menu/mega-menu.component';
 import icSearch from '@iconify/icons-ic/twotone-search';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'vex-toolbar',
@@ -53,7 +54,9 @@ export class ToolbarComponent implements OnInit {
   icDoneAll = icDoneAll;
   icArrowDropDown = icArrowDropDown;
 
-  constructor(private layoutService: LayoutService,
+  constructor(
+              private router: Router, 
+              private layoutService: LayoutService,
               private configService: ConfigService,
               private navigationService: NavigationService,
               private popoverService: PopoverService) { }
@@ -89,6 +92,15 @@ export class ToolbarComponent implements OnInit {
       ]
     });
   }
+
+  logout() {
+    localStorage.removeItem("Tajer_Token");
+    this.router.navigate(['/login'])
+  }
+  
+  
+  
+  
 
   openSearch() {
     this.layoutService.openSearch();

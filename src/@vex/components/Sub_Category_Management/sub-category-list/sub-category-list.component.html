@@ -7,11 +7,11 @@
       <div class="container header-table d-flex justify-content-between">
         <h5> Sub Categories Details </h5>
 
-        <mat-form-field class="w-50 mt-2">
+        <!-- <mat-form-field class="w-50 mt-2">
           <mat-label>Search of Sub Category</mat-label>
           <span matPrefix> <i class="bi bi-search" ></i>  &nbsp;</span>
           <input matInput autofocus>
-        </mat-form-field>
+        </mat-form-field> -->
 
         <div class="add-category">
             <button (click)="addCategory()" class="btn "> <i class="bi bi-plus-lg"></i></button>
@@ -25,7 +25,7 @@
           <th mat-header-cell *matHeaderCellDef> image </th>
           <td mat-cell *matCellDef="let element"> 
             <div class="container-img">
-              <img src="{{element.imageUrl}}" width="100%" height="100%" alt="">  
+              <img src="../../../../assets/img/demo/images.jpg" width="100%" height="100%" alt="">  
             </div>
           </td>
         </ng-container>
@@ -33,19 +33,13 @@
         <!-- englishName Column -->
         <ng-container matColumnDef="englishName">
           <th class="text-center" mat-header-cell *matHeaderCellDef> English Name </th>
-          <td class="text-center" mat-cell *matCellDef="let element"> {{element.englishName}} </td>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.englishNameSubCategory}} </td>
         </ng-container>
       
         <!-- arabicName Column -->
         <ng-container matColumnDef="arabicName">
           <th class="text-center" mat-header-cell *matHeaderCellDef> Arabic Name </th>
-          <td class="text-center" mat-cell *matCellDef="let element"> {{element.arabicName}} </td>
-        </ng-container>
-      
-        <!-- childLength Column -->
-        <ng-container matColumnDef="childLength">
-          <th class="text-center" mat-header-cell *matHeaderCellDef> Products Number </th>
-          <td class="text-center" mat-cell *matCellDef="let element"> 45 </td>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.arabicNameSubCategory}} </td>
         </ng-container>
       
         <!-- Action Column -->

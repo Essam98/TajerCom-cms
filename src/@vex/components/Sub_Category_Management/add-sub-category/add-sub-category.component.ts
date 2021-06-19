@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoadingController, ModalController } from '@ionic/angular';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { CategoryService } from 'src/@vex/services/category.service';
-import { Category } from 'src/app/services/modal/category';
+import { subCategoryService } from 'src/@vex/services/sub-category.service';
+import { Category, SubCategory } from 'src/app/services/modal/category';
 
 @Component({
   selector: 'vex-add-sub-category',
@@ -13,26 +13,33 @@ import { Category } from 'src/app/services/modal/category';
   styleUrls: ['./add-sub-category.component.scss']
 })
 export class AddSubCategoryComponent implements OnInit {
-  categoryForm: FormGroup;
+  subCategoryForm: FormGroup;
   url: string;
   file: File;
   path
+  Categories: object[];
+
+  
   constructor(
     private matSnackBar: MatSnackBar,
     private loadingController: LoadingController,
-    private angularFireStorage: AngularFireStorage,
     private categoryService: CategoryService,
-    private modalController: ModalController) { }
+    private modalController: ModalController,
+    private subCategoryService: subCategoryService) { }
 
   ngOnInit() {
-    this.categoryForm = new FormGroup({
+    this.subCategoryForm = new FormGroup({
       englishName: new FormControl('', Validators.required),
       arabicName: new FormControl(''),
+      parentCategory: new FormControl('', Validators.required),
       imageUrl: new FormControl(),
     })
+
+    this.getAllCategories();
+    this.listCategories();
   }
 
-  getFileUploder(e) {
+  getFileUploader(e) {
     if(e.target.files){
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0])
@@ -47,46 +54,65 @@ export class AddSubCategoryComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  async createCategory(category: Category) {
+  listCategories() {
+    this.categoryService.listCategories().subscribe(result => {
+      this.Categories = result;
+    })
+  }
 
-    if(this.categoryForm.invalid) {
+  async createSubCategory(subCategory: SubCategory) {
+
+    if(this.subCategoryForm.invalid) {
+      this.matSnackBar.open("Please Fill Out All Required Inputs!")
       return;
     } 
 
     const loading = this.loadingController.create({
       message: "Please Wait"
     });
-    (await loading).present();
+
+    let requestPayLoad = {
+      englishNameSubCategory: this.subCategoryForm.get("englishName").value, 
+      arabicNameSubCategory: this.subCategoryForm.get("arabicName").value, 
+      parentId: this.subCategoryForm.get("parentCategory").value
+    }
     
-    let filePath = `${category.englishName}-${this.file.name}`; 
-    var fileRef = this.angularFireStorage.ref(filePath);
+    this.subCategoryService.createNewSubCategory(requestPayLoad).subscribe()
     
-    this.angularFireStorage.upload(filePath, this.file).snapshotChanges().pipe(finalize(() => {
-      fileRef.getDownloadURL().subscribe(async url => {
-        category['imageUrl'] = url;
-        (await loading).dismiss();
-        this.storeCategory(category);
-      })
-    })
-    ).subscribe();
+    
+    setTimeout(async () => {
+      (await loading).dismiss();
+      this.dismissModal();
+      this.matSnackBar.open("Sub Category Added Successfully", '', { duration: 30000 });
+    }, 500)
+
   }
 
-  async storeCategory(category: Category) {
+  async saveSubCategory(subCategory: SubCategory) {
 
     const loadingController = this.loadingController.create({
       message: "Please Wait"
     })
     ;(await loadingController).present();    
-    await this.categoryService.createCategory(category).subscribe(() => {
-      this.dismissModal();
-      this.matSnackBar.open("Add Successfully", '', { duration: 2000 })
+
+    let requestPayLoad = {
+
+    }
+    
+    await this.subCategoryService.createNewSubCategory(subCategory).subscribe(() => {
     })
+    this.dismissModal();
+    this.matSnackBar.open("Add Successfully", '', { duration: 2000 })
 
     ;(await loadingController).dismiss();
   }
 
 
+  getAllCategories() {
+    
 
+    
+  }
 
 
 

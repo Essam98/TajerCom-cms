@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoadingController, ModalController, NavParams } from '@ionic/angular';
@@ -25,21 +24,21 @@ export class UpdateCategoryComponent implements OnInit {
 
   constructor(
     private loadingController: LoadingController,
-    private storage: AngularFireStorage,
+    private matSnackbar: MatSnackBar,
     private _snackBar: MatSnackBar,
     private navParams: NavParams,
     private categoryService: CategoryService,
     private modalController: ModalController) {
 
       this.category = this.navParams.data.category;
-      this.url = this.category.imageUrl
+      // this.url = this.category.imageUrl
     }
 
   ngOnInit() {
     this.categoryForm = new FormGroup({
-      id: new FormControl(this.category.id, Validators.required),
-      englishName: new FormControl(this.category.englishName, Validators.required),
-      arabicName: new FormControl(this.category.arabicName),
+      id: new FormControl(this.category?._id, Validators.required),
+      englishName: new FormControl(this.category?.englishNameCategory, Validators.required),
+      arabicName: new FormControl(this.category?.arabicNameCategory),
     })
   }
 
@@ -54,49 +53,28 @@ export class UpdateCategoryComponent implements OnInit {
       return;
     }
     const loading = this.loadingController.create({
-      message: "Please Wait"
+      message: "Please Wait..."
     })
     await (await loading).present();
 
-    if (this.newImageUrl) {
-
-      this.storage.storage.refFromURL(this.category['imageUrl']).delete();
-      
-      setTimeout(s => {
-        let filePath = `${category.englishName}-${this.file.name}`; 
-        var fileRef = this.storage.ref(filePath);
-        
-        this.storage.upload(filePath, this.file).snapshotChanges().pipe(finalize(() => {
-          fileRef.getDownloadURL().subscribe( async newUrl => {
-            category['imageUrl'] = newUrl;
-          })
-        })
-        ).subscribe();
-        
-        setTimeout(async s => {
-          this.categoryService.updateCategory(category).subscribe(async result => {
-            
-            await (await loading).dismiss();
-            this.dismissModal();
-            this._snackBar.open("Update Successfully", '', { duration: 2000 })
-          })
-          await (await loading).dismiss();
-        },2500)
-      },0)
-    } else {
-      setTimeout(async s => {
-        this.categoryService.updateCategory(category).subscribe(async result => {
-          
-          await (await loading).dismiss();
-          this.dismissModal();
-          this._snackBar.open("Update Successfully", '', { duration: 2000 })
-        })
-        await (await loading).dismiss();
-      },0)
+    let requestPayLoad = {
+      _id: this.category._id,
+      englishNameCategory: this.categoryForm.get('englishName').value,
+      arabicNameCategory: this.categoryForm.get('arabicName').value,
     }
+    
+
+    this.categoryService.updateCategory(requestPayLoad).subscribe(result => {})
+    
+    setTimeout(async s => {
+      await (await loading).dismiss();
+      this.modalController.dismiss();
+    }, 500);
+
+    this.matSnackbar.open("Category Updated Successfully", '', { duration: 3000 })
   }
 
-  getFileUploder(e) {
+  getFileUploader(e) {
     if(e.target.files){
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0])

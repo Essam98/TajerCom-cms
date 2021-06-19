@@ -29,11 +29,11 @@ export class AddCategoryComponent implements OnInit {
     this.categoryForm = new FormGroup({
       englishName: new FormControl('', Validators.required),
       arabicName: new FormControl(''),
-      imageUrl: new FormControl(),
+      // imageUrl: new FormControl(),
     })
   }
 
-  getFileUploder(e) {
+  getFileUploader(e) {
     if(e.target.files){
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0])
@@ -54,40 +54,25 @@ export class AddCategoryComponent implements OnInit {
       return;
     } 
 
-    const loading = this.loadingController.create({
-      message: "Please Wait"
-    });
-    (await loading).present();
-    
-    let filePath = `${category.englishName}-${this.file.name}`; 
-    var fileRef = this.angularFireStorage.ref(filePath);
-    
-    this.angularFireStorage.upload(filePath, this.file).snapshotChanges().pipe(finalize(() => {
-      fileRef.getDownloadURL().subscribe(async url => {
-        category['imageUrl'] = url;
-        (await loading).dismiss();
-        this.storeCategory(category);
-      })
+    const loading = await this.loadingController.create({
+      message: "Please Wait..."
     })
-    ).subscribe();
-  }
 
-  async storeCategory(category: Category) {
-
-    const loadingController = this.loadingController.create({
-      message: "Please Wait"
-    })
-    ;(await loadingController).present();    
-    await this.categoryService.createCategory(category).subscribe(() => {
+    loading.present();
+    
+    let requestPayLoad = {
+      englishNameCategory: this.categoryForm.get('englishName').value,
+      arabicNameCategory: this.categoryForm.get('arabicName').value,
+    }
+    
+    this.categoryService.createNewCategory(requestPayLoad).subscribe();
+    
+    setTimeout(s => {
+      loading.dismiss();
       this.dismissModal();
-      this.matSnackBar.open("Add Successfully", '', { duration: 2000 })
-    })
-
-    ;(await loadingController).dismiss();
+    }, 500)
   }
-
-
-
+  
 
 
 }

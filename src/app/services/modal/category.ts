@@ -1,9 +1,18 @@
 export class Category {
+    _id?: string;
+    englishNameCategory?: string;
+    arabicNameCategory?: string;
+    imageUrl?: string;
+    subCategories: string;
+}
+
+export class SubCategory {
     id?: string;
     englishName?: string;
     arabicName?: string;
     imageUrl?: string;
-    childrenProducts: Product[];
+    parentCategory: string;
+    product: Product[];
 }
 
 export class Product {

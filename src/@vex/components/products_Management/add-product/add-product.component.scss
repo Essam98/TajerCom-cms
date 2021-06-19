@@ -40,3 +40,26 @@ form {
     }
 
 }
+
+.container-img {
+    text-align: center;
+    div {
+        text-align: center;
+        width: 200px !important;
+        height: 150px !important;
+        img {
+            height: 150px;
+            padding: 0px 20px;
+            border-radius: 50%;
+            width: 200px;
+        }
+    }
+}
+.main {
+   background-color: #fff;
+//    margin-top: 50px; 
+}
+
+
+
+

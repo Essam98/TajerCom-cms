@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators/map'
 import { Category } from 'src/app/services/modal/category';
 import { UpdateCategoryComponent } from '../update-category/update-category.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'vex-category',
@@ -15,11 +14,10 @@ import { AngularFireStorage } from '@angular/fire/storage';
 })
 export class CategoryComponent implements OnInit {
 
-  displayedColumns: string[] = ['image', 'arabicName', 'englishName', 'childLength', 'action'];
+  displayedColumns: string[] = ['image', 'englishName', 'arabicName', 'action'];
   dataSource;
 
   constructor(
-    private storage: AngularFireStorage,
     private matSnackbar: MatSnackBar,
     private alertController: AlertController,
     private loadingController: LoadingController,
@@ -53,20 +51,9 @@ export class CategoryComponent implements OnInit {
     
     loading.present();
     
-    this.categoryService.getCategoriesList().pipe(map(responeData => {
-
-      const categoryArray = [];
-      for (const key in responeData) {
-        if (responeData.hasOwnProperty(key)) {
-          categoryArray.push({...responeData[key], id: key})
-          loading.dismiss();
-        }
-      }
-      return categoryArray;
-      
-    })).subscribe(category => {
-      this.dataSource = category
-    });
+    this.categoryService.listCategories().subscribe(result => {
+      this.dataSource = result
+    })
 
     loading.dismiss();
   }
@@ -94,11 +81,12 @@ export class CategoryComponent implements OnInit {
           text: "Delete",
           handler: async() => {
             await loadingController.present()
-            this.categoryService.deleteCategory(categoryObject.id).subscribe(result => {
+            this.categoryService.deleteCategory(categoryObject._id).subscribe(result => {
+
+              
               this.getCategoriesList();
               loadingController.dismiss();
-              this.matSnackbar.open("Delete Successfully", '', { duration: 2000 })
-              this.storage.storage.refFromURL(categoryObject.imageUrl).delete();
+              this.matSnackbar.open("Category has been Deleted Successfully", '', { duration: 2000 })
             })
           }
         }
@@ -108,6 +96,23 @@ export class CategoryComponent implements OnInit {
     
 
   }
+
+  async createCategoryNODE() {
+
+    let modal = await this.modalController.create({
+      component: UpdateCategoryComponent,
+      componentProps: {  }
+    })
+
+    modal.onDidDismiss().then(result => {
+      this.getCategoriesList();
+    })
+
+    return modal.present();
+  }
+  
+  
+  
 
   async onUpdateCategory(category: Category) {
 

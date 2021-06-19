@@ -6,7 +6,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/Backend/models/subCategory.js"  ],
   "exclude": [
     "src/test.ts",
     "src/**/*.spec.ts"

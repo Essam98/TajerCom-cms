@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   invalidLogin: boolean;
   icVisibility = icVisibility;
   icVisibilityOff = icVisibilityOff;
+  errorMessage
 
   constructor(
     private loginService: LoginService,
@@ -45,30 +46,15 @@ export class LoginComponent implements OnInit {
 
     if (this.form.valid) {
       let personInfo: Person = { ...values };
-  
-      let userName = personInfo.email;
-      let password = personInfo.password;
-      let formData = new FormData();
-      formData.append("Username",userName);
-      formData.append("Password",password);
-  
 
-        this.loginService.login(formData).subscribe(result=>{
-          if(result.errorCode === 0){
-            this.invalidLogin = false;
-            localStorage.setItem("EIAG_Token", result.data.token);
-            localStorage.setItem("EIAG_Username", result.data.username);
-            this.router.navigate(["/"])
-          } else {
-            this.invalidLogin = true;
-          }
-        })
+        if (this.loginService.login(personInfo)) {
+          localStorage.setItem("Tajer_Token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.VgjCh6oP_eggekSW41l26Q4W9jHLE2SowVkPQ_S3D8M")
+          this.router.navigate(['/'])
+          this.errorMessage = false
+        } else {
+          this.errorMessage = true
+        }
       }
-
-    // this.router.navigate(['/']);
-    this.snackbar.open('Lucky you! Looks like you didn\'t need a password or email address! For a real application we provide validators to prevent this. ;)', 'LOL THANKS', {
-      duration: 10000
-    });
   }
 
   toggleVisibility() {

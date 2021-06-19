@@ -11,26 +11,29 @@ export class CategoryService {
 
     constructor(private http: HttpClient) {}
 
-    createCategory(data: Category) {
-        return this.http.post<any>(environment.ApiURL + "createCategory.json", data)
+    listCategories() {
+        return this.http.get<any>(environment.ApiNode + "ListCategories");        
     }
 
-    getCategoriesList() {
-        return this.http.get<any>(environment.ApiURL + "createCategory.json");
+    createNewCategory(category) {
+        return this.http.post<any>(environment.ApiNode + "addCategory", category);
     }
 
     deleteCategory(id: string) {
-        return this.http.delete<any>(environment.ApiURL + "createCategory/" + id + ".json")
+        return this.http.delete<any>(environment.ApiNode + "DeleteCategory/" + id);
     }
 
     updateCategory(category) {
-        return this.http.patch<any>(environment.ApiURL + "createCategory/" + category.id +".json", category)
+        return this.http.put<any>(environment.ApiNode + "updateCategory/" + category._id, category)
     }
 
-    getFilesFromStroage() {
-        return this.http.get("gs://tajerproject.appspot.com/c1929d3492c2f64ab65b43808c072043.jpg");
+    getCategoryById(category) {
+        return this.http.get<any>(environment.ApiNode + "getCategoryById/" + category.id   )
     }
 
-    
+
     
 }
+
+
+

@@ -30,19 +30,22 @@
         </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- <div fxLayout="row" fxLayoutAlign="space-between center">
         <mat-checkbox class="caption" color="primary">Remember Me</mat-checkbox>
         <a [routerLink]="['/forgot-password']" class="caption">Forgot Password?</a>
-      </div>
+      </div> -->
 
       <button (click)="send(form.value)" color="primary" mat-raised-button type="button">
         SIGN IN
       </button>
 
-      <p class="text-secondary text-center">
-        Don't have an account?<br/>
-        <a [routerLink]="['/register']">Click here to create one</a>
-      </p>
+      <div class="row">
+        <div class="col-md-12" *ngIf="errorMessage">
+          <div class="alert alert-danger">
+            Username or password is Incorrect!
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

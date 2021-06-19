@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
+import { ProductService } from 'src/@vex/services/product.service';
 import { Product } from 'src/app/services/modal/category';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { UpdateProductComponent } from '../update-product/update-product.component';
@@ -12,49 +14,69 @@ import { UpdateProductComponent } from '../update-product/update-product.compone
 export class ProductListComponent implements OnInit {
   
   dataSource: Product;
-  displayedColumns: string[] = 
-  [
+  displayedColumns: string[] = [
     'image', 'arabicName', 'englishName', 'price', 
     'totalQuantity', 'categoryName', 'action'
   ];
 
-  constructor(private modalController: ModalController) { }
+  constructor(
+    private modalController: ModalController,
+    private alertController: AlertController,
+    private matSnackBar: MatSnackBar,
+    private loadingController: LoadingController,
+    private productService: ProductService 
+  ) { }
 
   ngOnInit(): void {
+    this.getProductsList();
   }
 
   getProductsList() {
-
-  }
-
-  async addNewProduct() {
-
-    let modalController = await this.modalController.create({
-      component: AddProductComponent,
-      swipeToClose: true,
-      componentProps: {}, 
+    this.productService.listProducts().subscribe(result => {
+      this.dataSource = result;
     })
-    modalController.onDidDismiss().then(() => {
-      this.getProductsList();
-    })
-    return modalController.present();
   }
 
   async onUpdateProduct(product: Product) {
-    let modalController = await this.modalController.create({
-      component: UpdateProductComponent,
-      swipeToClose: true,
-      componentProps: { product: product }, 
-    })
-    modalController.onDidDismiss().then(() => {
-      this.getProductsList();
-    })
-    return modalController.present();
-
   }
 
-  onDeleteProduct(product: Product) {
 
+  async onDeleteProduct(product: Product) {
+    const alertController = this.alertController.create({
+      header: "Confirm",
+      message: "Are you sure to delete this product?",
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            return;
+          }
+        },
+        {
+          text: "Delete",
+          role: "delete",
+          cssClass: "secondary",
+          handler: async () => {
+            this.productService.deleteProduct(product).subscribe(() => {
+              this.getProductsList();
+              this.matSnackBar.open("Product has been deleted");
+            })
+          }
+        }
+      ]
+    });
+    (await alertController).present();
+
+    
   }
 
 }
+
+
+
+
+
+
+
