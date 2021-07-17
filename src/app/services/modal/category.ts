@@ -2,7 +2,7 @@ export class Category {
     _id?: string;
     englishNameCategory?: string;
     arabicNameCategory?: string;
-    imageUrl?: string;
+    image?: string;
     subCategories: string;
 }
 

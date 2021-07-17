@@ -52,11 +52,14 @@ export class CategoryComponent implements OnInit {
     loading.present();
     
     this.categoryService.listCategories().subscribe(result => {
-      this.dataSource = result
+      this.dataSource = result;
+
     })
 
     loading.dismiss();
   }
+  
+  getImageUrl = (image: string): string => image ? 'http://localhost:5000/' + image : '../../../../assets/img/demo/images.jpg'
   
 
   async onDeleteCategory(categoryObject: Category) {

@@ -16,7 +16,7 @@ export class ProductListComponent implements OnInit {
   dataSource: Product;
   displayedColumns: string[] = [
     'image', 'arabicName', 'englishName', 'price', 
-    'totalQuantity', 'categoryName', 'action'
+    'totalQuantity', 'action'
   ];
 
   constructor(
@@ -37,9 +37,8 @@ export class ProductListComponent implements OnInit {
     })
   }
 
-  async onUpdateProduct(product: Product) {
-  }
-
+  getImageUrl = (image: string) => image ? "http://localhost:5000/" + image : "../../../../assets/img/demo/images.jpg";
+  
 
   async onDeleteProduct(product: Product) {
     const alertController = this.alertController.create({

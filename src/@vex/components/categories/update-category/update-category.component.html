@@ -37,13 +37,12 @@
                         <input type="file" (change)="getFileUploader($event)">
                     </div>
                     
-                    <!-- <div class="pl-3 w-50 h-75 mt-2" *ngIf="!newImageUrl">
-                        <img [src]="url" width="75%" style="height: 100% !important" alt="connot access to the image">
+                    <div class="pl-3 w-50 h-75 mt-2" *ngIf="!newImageUrl" >
+                        <img [src]="getImageUrl(this.category.image)" width="75%" style="height: 100% !important" alt="connot access to the image">
                     </div>
-
-                    <div class="pl-3 w-50 h-75 mt-2 " *ngIf="newImageUrl">
-                        <img [src]="newImageUrl" width="75%" style="height: 100% !important;" alt="connot access to the image">
-                    </div> -->
+                    <div class="pl-3 w-50 h-75 mt-2" *ngIf="newImageUrl" >
+                        <img [src]="newImageUrl" width="75%" style="height: 100% !important" alt="connot access to the image">
+                    </div>
                 </div>
             </div>
         </div>

@@ -19,7 +19,6 @@ import { CategoryComponent } from '../@vex/components/categories/categoryTable/c
 import { AddCategoryComponent } from '../@vex/components/categories/add-category/add-category.component';
 import { UpdateCategoryComponent } from '../@vex/components/categories/update-category/update-category.component';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';

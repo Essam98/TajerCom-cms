@@ -34,9 +34,11 @@ export class UpdateSubCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.categoryForm = new FormGroup({
-      id: new FormControl(this.subCategory?._id, Validators.required),
+      _id: new FormControl(this.subCategory?._id, Validators.required),
       englishName: new FormControl(this.subCategory?.englishNameSubCategory, Validators.required),
       arabicName: new FormControl(this.subCategory?.arabicNameSubCategory),
+      parentId: new FormControl(this.subCategory?.parentId),
+      image: new FormControl(this.subCategory?.image),
     })
   }
 
@@ -58,21 +60,42 @@ export class UpdateSubCategoryComponent implements OnInit {
     })
     
     await (await loading).present();
-    let requestPayLoad = {
-      _id: this.categoryForm.get("id").value,
-      englishNameSubCategory: this.categoryForm.get("englishName").value,
-      arabicNameSubCategory: this.categoryForm.get("arabicName").value,
+
+    
+    let requestPayLoad = new FormData();
+    
+    
+    requestPayLoad.append('_id', this.categoryForm.get("_id")?.value); 
+    requestPayLoad.append('englishNameSubCategory', this.categoryForm.get("englishName")?.value); 
+    requestPayLoad.append('arabicNameSubCategory', this.categoryForm.get("arabicName")?.value); 
+    requestPayLoad.append('parentId', this.categoryForm.get("parentId")?.value); 
+    if (this.file) {
+      requestPayLoad.append('image', this.file);
+    } else {
+      requestPayLoad.append('image', this.categoryForm.get("image")?.value);
     }
 
-    this.subCategoryService.updateSubCategory(requestPayLoad).subscribe();
-    
-    setTimeout(async s => {
-      (await loading).dismiss();
+
+    this.subCategoryService.updateSubCategory(this.categoryForm.get("_id")?.value, requestPayLoad).subscribe(res => {
+
+      setTimeout(async s => {
+        (await loading).dismiss();
+        this.dismissModal();
+        this.matSnackbar.open("SubCategory Updated Successfully");
+      }, 500)
+      
+    }, async error => {
       this.dismissModal();
-      this.matSnackbar.open("SubCategory Updated Successfully");
-    }, 500)
+      (await loading).dismiss();
+      console.log(error);
+    });
+    
+
 
   }
+
+  getImageUrl = (image) => image ? 'http://localhost:5000/' + image : '../../../../assets/img/demo/images.jpg';
+
 
   getFileUploader(e) {
     if(e.target.files){
@@ -80,6 +103,7 @@ export class UpdateSubCategoryComponent implements OnInit {
       reader.readAsDataURL(e.target.files[0])
       this.file = e.target.files[0];
       reader.onload = (event: any) => {
+        this.subCategory.image = this.newImageUrl;
         this.newImageUrl = event.target.result
       }
     }

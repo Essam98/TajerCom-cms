@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoadingController, ModalController } from '@ionic/angular';
@@ -21,7 +20,6 @@ export class AddCategoryComponent implements OnInit {
   constructor(
     private matSnackBar: MatSnackBar,
     private loadingController: LoadingController,
-    private angularFireStorage: AngularFireStorage,
     private categoryService: CategoryService,
     private modalController: ModalController) { }
 
@@ -59,11 +57,12 @@ export class AddCategoryComponent implements OnInit {
     })
 
     loading.present();
+
+    let requestPayLoad = new FormData();
     
-    let requestPayLoad = {
-      englishNameCategory: this.categoryForm.get('englishName').value,
-      arabicNameCategory: this.categoryForm.get('arabicName').value,
-    }
+    requestPayLoad.append('englishNameCategory', this.categoryForm.get('englishName').value);
+    requestPayLoad.append('arabicNameCategory', this.categoryForm.get('arabicName').value);
+    requestPayLoad.append('image', this.file);
     
     this.categoryService.createNewCategory(requestPayLoad).subscribe();
     

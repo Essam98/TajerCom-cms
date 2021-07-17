@@ -18,8 +18,8 @@ export class ProductService {
         return this.http.post<any>(environment.ApiNode + "AddProduct", product);
     }
 
-    updateProduct(product) {
-        return this.http.put<any>(environment.ApiNode + "UpdateProduct/" + product._id, product);
+    updateProduct(_id: string, product: FormData) {
+        return this.http.put<any>(environment.ApiNode + "UpdateProduct/" + _id, product);
     }
 
     deleteProduct(product) {

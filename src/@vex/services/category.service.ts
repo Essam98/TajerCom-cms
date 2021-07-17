@@ -23,8 +23,8 @@ export class CategoryService {
         return this.http.delete<any>(environment.ApiNode + "DeleteCategory/" + id);
     }
 
-    updateCategory(category) {
-        return this.http.put<any>(environment.ApiNode + "updateCategory/" + category._id, category)
+    updateCategory(id, category) {
+        return this.http.put<any>(environment.ApiNode + "updateCategory/" + id, category)
     }
 
     getCategoryById(category) {

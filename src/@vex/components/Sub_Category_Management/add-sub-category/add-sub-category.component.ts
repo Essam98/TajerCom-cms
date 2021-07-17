@@ -71,11 +71,13 @@ export class AddSubCategoryComponent implements OnInit {
       message: "Please Wait"
     });
 
-    let requestPayLoad = {
-      englishNameSubCategory: this.subCategoryForm.get("englishName").value, 
-      arabicNameSubCategory: this.subCategoryForm.get("arabicName").value, 
-      parentId: this.subCategoryForm.get("parentCategory").value
-    }
+    let requestPayLoad = new FormData() 
+    
+    requestPayLoad.append('englishNameSubCategory', this.subCategoryForm.get("englishName").value); 
+    requestPayLoad.append('arabicNameSubCategory', this.subCategoryForm.get("arabicName").value); 
+    requestPayLoad.append('parentId', this.subCategoryForm.get("parentCategory").value); 
+    this.file && requestPayLoad.append('image', this.file); 
+    
     
     this.subCategoryService.createNewSubCategory(requestPayLoad).subscribe()
     

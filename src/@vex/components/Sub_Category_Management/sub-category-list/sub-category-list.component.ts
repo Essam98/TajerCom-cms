@@ -94,6 +94,11 @@ export class SubCategoryListComponent implements OnInit {
     })
     alertController.present();
 
+    console.log(subCategory);
+  }
+
+  getFileUrl(image) {
+    return image ? 'http://localhost:5000/' + image : "../../../../assets/img/demo/images.jpg";
   }
 
   async onUpdateCategory(subCategory) {

@@ -6,6 +6,7 @@ import { AlertController, LoadingController, ModalController } from '@ionic/angu
 import { ProductService } from 'src/@vex/services/product.service';
 import { subCategoryService } from 'src/@vex/services/sub-category.service';
 import { Category, Product } from 'src/app/services/modal/category';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'vex-add-product',
@@ -14,6 +15,7 @@ import { Category, Product } from 'src/app/services/modal/category';
 })
 export class AddProductComponent implements OnInit {
 
+  objectImage
   uploadImageError: boolean = false
   file: File;
   submitAttempt: boolean = false;
@@ -30,11 +32,12 @@ export class AddProductComponent implements OnInit {
     private alertController: AlertController,
     private subCategoryService: subCategoryService,
     private route: ActivatedRoute,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.productForm = new FormGroup({
-      _id: new FormControl('', Validators.required),
+      _id: new FormControl(''),
       englishName: new FormControl('', Validators.required),
       arabicName: new FormControl('', Validators.required),
       englishDescription: new FormControl('', Validators.required),
@@ -46,11 +49,14 @@ export class AddProductComponent implements OnInit {
       productImageUrl: new FormControl(''),
     })
 
+
     this.listAllSubCategories();
     this.route.queryParams.subscribe(result => {
       this.productService.getProductById(result.id).subscribe(result => {
 
         this.updateProduct = result
+        this.fileImageUrl = "http://localhost:5000/" + result?.image
+        this.objectImage = result?.image
         
         // Bind All Product Values 
         this.productForm.get('_id').setValue(result._id);     
@@ -65,17 +71,16 @@ export class AddProductComponent implements OnInit {
         // this.productForm.get('productImageUrl').setValue(result.englishNameProduct);     
       })
     })
-
-    
-    
   }
+
+  get = param => this.productForm.get(param);
 
   listAllSubCategories() {
     this.subCategoryService.listSubCategories().subscribe(result => {
       this.SubCategories = result;
 
       if (!result.length) {
-        this.snackbar.open("Please Add at least one sub category and come back", '', { duration: 5000 });
+        this.snackbar.open("Please Add at least one sub category and come back", 'Got It', { duration: 3000, panelClass: ['error'] });
       }
       
     })
@@ -83,7 +88,7 @@ export class AddProductComponent implements OnInit {
 
   async update() {
     if (this.productForm.invalid) {
-      this.snackbar.open("Please Fill out all required inputs");
+      this.snackbar.open("Please Fill out all required inputs", 'Got it', { duration: 3000, panelClass: ['error'] });
       return;
     }
 
@@ -93,20 +98,33 @@ export class AddProductComponent implements OnInit {
 
     loadingController.present();
 
-    let requestPayLoad = {
-      _id: this.productForm.get("_id").value,
-      englishNameProduct: this.productForm.get("englishName").value,
-      arabicNameProduct: this.productForm.get("arabicName").value,
-      englishDescriptionProduct: this.productForm.get("englishDescription").value,
-      arabicDescriptionProduct: this.productForm.get("arabicDescription").value,
-      price: this.productForm.get("price").value,
-      totalQuantity: this.productForm.get("totalQuantity").value,
-      isWholesale: this.productForm.get("isWholesale").value,
+    let requestPayLoad = new FormData();
+
+    requestPayLoad.append('englishNameProduct', this.get('englishName')?.value);
+    requestPayLoad.append('arabicNameProduct', this.get('arabicName')?.value);
+    requestPayLoad.append('englishDescriptionProduct', this.get('englishDescription')?.value);
+    requestPayLoad.append('arabicDescriptionProduct', this.get('arabicDescription')?.value);
+    requestPayLoad.append('price', this.get('price')?.value);
+    requestPayLoad.append('parentId', this.get('parentSubCategory')?.value);
+    requestPayLoad.append('totalQuantity', this.get('totalQuantity')?.value);
+    requestPayLoad.append('isWholesale', this.get('isWholesale')?.value);
+    
+    if (this.file) {
+      requestPayLoad.append('image', this.file);
+    } else {
+      requestPayLoad.append('image', this.updateProduct['image']);
     }
 
-    this.productService.updateProduct(requestPayLoad).subscribe();
-    this.snackbar.open("Product Updated Successfully", "Close", { duration: 3000 })
-    loadingController.dismiss();
+
+    this.productService.updateProduct(this.get('_id')?.value, requestPayLoad).subscribe(res => {
+
+      
+    });
+    setTimeout(() => {
+      this.snackbar.open("Product Updated Successfully", "", { duration: 3000, panelClass: ['success'] })
+      loadingController.dismiss();
+      this.router.navigate(['/apps/product-management']);
+    }, 500);
   }
 
   getFileUploader(e) {
@@ -120,11 +138,15 @@ export class AddProductComponent implements OnInit {
     }
   }
 
+  getRequestPayLoad() {
+
+  }
+
   async createNewProduct(product: Product) {
 
     this.submitAttempt = true;
     if (this.productForm.invalid) {
-      this.snackbar.open('Please Fill out all required inputs', '', { duration: 3000 })
+      this.snackbar.open('Please Fill out all required inputs', 'got it', { duration: 3000, panelClass: ['error'] })
       return;
     }
 
@@ -132,25 +154,33 @@ export class AddProductComponent implements OnInit {
       message: "Please Wait"
     });
     await alertController.present();
-      
-    let requestPayLoad = {
-      englishNameProduct: this.productForm.get("englishName").value,
-      arabicNameProduct: this.productForm.get("arabicName").value,
-      englishDescriptionProduct: this.productForm.get("englishDescription").value,
-      arabicDescriptionProduct: this.productForm.get("arabicDescription").value,
-      price: this.productForm.get("price").value,
-      totalQuantity: this.productForm.get("totalQuantity").value,
-      isWholesale: this.productForm.get("isWholesale").value,
-      parentId: this.productForm.get("parentSubCategory").value,
+
+    let requestPayLoad = new FormData();
+
+    requestPayLoad.append('englishNameProduct', this.get('englishName')?.value);
+    requestPayLoad.append('arabicNameProduct', this.get('arabicName')?.value);
+    requestPayLoad.append('englishDescriptionProduct', this.get('englishDescription')?.value);
+    requestPayLoad.append('arabicDescriptionProduct', this.get('arabicDescription')?.value);
+    requestPayLoad.append('price', this.get('price')?.value);
+    requestPayLoad.append('parentId', this.get('parentSubCategory')?.value);
+    requestPayLoad.append('totalQuantity', this.get('totalQuantity')?.value);
+    requestPayLoad.append('isWholesale', this.get('isWholesale')?.value);
+    
+    if (this.file) {
+      requestPayLoad.append('image', this.file);
+    } else {
+      requestPayLoad.append('image', this.objectImage);
     }
 
-    console.log(requestPayLoad);
-    
-    this.productService.createNewProduct(requestPayLoad).subscribe();
+    this.productService.createNewProduct(requestPayLoad).subscribe(res => {
+    });
 
-    this.snackbar.open("Add Product Successfully", 'Close', { duration: 3000 })
-  
-    alertController.dismiss();
+    setTimeout(() => {
+      this.router.navigate(['/apps/product-management']);
+      this.snackbar.open("Add Product Successfully", '', { duration: 3000, panelClass: ['success'] })
+      alertController.dismiss();
+      
+    }, 500);
   }
   
 }

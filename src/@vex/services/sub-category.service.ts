@@ -20,8 +20,8 @@ export class subCategoryService {
         return this.http.post<any>(environment.ApiNode + "AddSubCategory", subCategory);
     }
 
-    updateSubCategory(subCategory) {
-        return this.http.put<any>(environment.ApiNode + "UpdateSubCategory/" + subCategory._id, subCategory );
+    updateSubCategory(_id: string, subCategory: FormData) {
+        return this.http.put<any>(environment.ApiNode + "updateSubCategory/" + _id, subCategory );
     }
 
     getSubCategoryById(subCategory) {

@@ -32,3 +32,34 @@ $secondary-color: #EB6B16;
   // --color-warn: yellow;
   // --color-warn-contrast: black;
 }
+
+// Secondary Message
+.secondary {
+  border: #d3d6d8;
+  background-color: #e2e3e5;
+  color: #41464b;
+}
+
+// Success Message
+.success {
+  border: #badbcc;
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+// Error Message
+.error {
+  border: #f5c2c7;
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+
+
+
+
+
+
+
+
+

@@ -31,7 +31,7 @@ export class UpdateCategoryComponent implements OnInit {
     private modalController: ModalController) {
 
       this.category = this.navParams.data.category;
-      // this.url = this.category.imageUrl
+      this.url = this.category.image
     }
 
   ngOnInit() {
@@ -39,6 +39,7 @@ export class UpdateCategoryComponent implements OnInit {
       id: new FormControl(this.category?._id, Validators.required),
       englishName: new FormControl(this.category?.englishNameCategory, Validators.required),
       arabicName: new FormControl(this.category?.arabicNameCategory),
+      image: new FormControl(this.category?.image),
     })
   }
 
@@ -49,7 +50,7 @@ export class UpdateCategoryComponent implements OnInit {
   async updateCategory(category: Category) {
 
     if(this.categoryForm.invalid) {
-      this._snackBar.open("Please fill all required inputs", '', { duration: 2000 })
+      this._snackBar.open("Please fill all required inputs", 'Got It', { duration: 2000 })
       return;
     }
     const loading = this.loadingController.create({
@@ -57,21 +58,25 @@ export class UpdateCategoryComponent implements OnInit {
     })
     await (await loading).present();
 
-    let requestPayLoad = {
-      _id: this.category._id,
-      englishNameCategory: this.categoryForm.get('englishName').value,
-      arabicNameCategory: this.categoryForm.get('arabicName').value,
-    }
+    let requestPayLoad = new FormData();
     
+    requestPayLoad.append('_id', this.category._id)
+    requestPayLoad.append('englishNameCategory', this.categoryForm.get('englishName').value)
+    requestPayLoad.append('arabicNameCategory', this.categoryForm.get('arabicName').value)
+    if (this.file) {
+      requestPayLoad.append('image', this.file);
+    }
 
-    this.categoryService.updateCategory(requestPayLoad).subscribe(result => {})
+    this.categoryService.updateCategory(this.category._id, requestPayLoad).subscribe(result => {
+      
+    })
     
     setTimeout(async s => {
       await (await loading).dismiss();
       this.modalController.dismiss();
     }, 500);
 
-    this.matSnackbar.open("Category Updated Successfully", '', { duration: 3000 })
+    this.matSnackbar.open("Category Updated Successfully", 'Close', { duration: 3000 })
   }
 
   getFileUploader(e) {
@@ -80,10 +85,27 @@ export class UpdateCategoryComponent implements OnInit {
       reader.readAsDataURL(e.target.files[0])
       this.file = e.target.files[0];
       reader.onload = (event: any) => {
-        this.newImageUrl = event.target.result
+        this.newImageUrl = event.target.result;
+        this.category.image = this.newImageUrl;
       }
     }
   }
-  
+
+
+
+  getImageUrl = (image) => image ? 'http://localhost:5000/' + image : '../../../../assets/img/demo/images.jpg';
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

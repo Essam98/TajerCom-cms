@@ -4,6 +4,12 @@ var cors = require('cors')
 const category = require('./models/MainCategory')
 const app = express();
 
+const helmet = require('helmet');
+const compression = require('compression');
+
+app.use(helmet());
+app.use(compression());
+
 app.use(cors())
 
 mongoose.connect('mongodb://localhost/tajer', { useUnifiedTopology: true })
