@@ -1,0 +1,71 @@
+$primaryColor: #2BA4DD;
+$secondaryBlackColor: #3C3C3C;
+$secondaryPinkColor: #B51F71;
+$secondaryLightBlueColor: #1070B7;
+$secondaryDarkBlueColor: #2D3387;
+$secondaryWhiteColor: #f1f1f1;
+
+header {
+    background-color: $primaryColor;
+    color: $secondaryWhiteColor;
+}
+
+.dissmisModal { 
+    span {
+        font-size: 18px;
+        &:hover {
+            cursor: pointer;
+        }
+        cursor: pointer;
+    }
+}
+
+form {
+    height: 90%;
+}
+
+.buttonsModal {
+    button {
+        text-transform: uppercase;
+    }
+ 
+    .cancel {
+        border: 3px solid $primaryColor;
+    }
+    
+    .create-category {
+        border: 1px solid $primaryColor;
+        background-color: $primaryColor;
+        color: $secondaryWhiteColor;
+    }
+
+}
+
+.container-img {
+    text-align: center;
+    div {
+        text-align: center;
+        width: 200px !important;
+        height: 150px !important;
+        img {
+            height: 150px;
+            padding: 0px 20px;
+            border-radius: 50%;
+            width: 200px;
+        }
+    }
+}
+.main {
+   background-color: #fff;
+}
+
+
+.agm-container {
+    width: 90%;
+    margin: auto;
+    // height: 500px;
+}
+
+agm-map {
+    height: 300px;
+  }

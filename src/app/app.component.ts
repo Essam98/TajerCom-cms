@@ -149,6 +149,25 @@ export class AppComponent {
               }
             ]
           },
+          {
+            type: 'dropdown',
+            label: 'Users Management',
+            icon: icViewCompact,
+            children: [
+              {
+                type: 'link',
+                label: 'List Users',
+                route: '/apps/list-users',
+                icon: icAssigment
+              },
+              {
+                type: 'link',
+                label: 'Add User',
+                route: '/apps/add-user',
+                icon: icAssigment
+              }
+            ]
+          },
 
           // {
           //   type: 'link',

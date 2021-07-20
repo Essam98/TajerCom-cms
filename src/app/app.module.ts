@@ -28,6 +28,9 @@ import { UpdateProductComponent } from 'src/@vex/components/products_Management/
 import { SubCategoryListComponent } from '../@vex/components/Sub_Category_Management/sub-category-list/sub-category-list.component';
 import { AddSubCategoryComponent } from 'src/@vex/components/Sub_Category_Management/add-sub-category/add-sub-category.component';
 import { UpdateSubCategoryComponent } from 'src/@vex/components/Sub_Category_Management/update-sub-category/update-sub-category.component';
+import { ListUsersComponent } from 'src/@vex/components/Users_Management/list-users/list-users.component';
+import { AddUserComponent } from 'src/@vex/components/Users_Management/add-user/add-user.component';
+import { AgmCoreModule } from '@agm/core'
 
 
 @NgModule({
@@ -41,6 +44,8 @@ import { UpdateSubCategoryComponent } from 'src/@vex/components/Sub_Category_Man
     SubCategoryListComponent,
     AddSubCategoryComponent,
     UpdateSubCategoryComponent,
+    ListUsersComponent,
+    AddUserComponent,
   ],
   entryComponents: [
     AddCategoryComponent,
@@ -67,6 +72,9 @@ import { UpdateSubCategoryComponent } from 'src/@vex/components/Sub_Category_Man
     // Vex
     VexModule,
     CustomLayoutModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCoLYwaWPnl52n_C1w7qNikUjz2VcUCO9o"
+    })
   ],
   providers: [
   ],

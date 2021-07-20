@@ -8,6 +8,8 @@ import { CategoryComponent } from 'src/@vex/components/categories/categoryTable/
 import { ProductListComponent } from 'src/@vex/components/products_Management/product-list/product-list.component';
 import { SubCategoryListComponent } from 'src/@vex/components/Sub_Category_Management/sub-category-list/sub-category-list.component';
 import { AddProductComponent } from 'src/@vex/components/products_Management/add-product/add-product.component';
+import { ListUsersComponent } from 'src/@vex/components/Users_Management/list-users/list-users.component';
+import { AddUserComponent } from 'src/@vex/components/Users_Management/add-user/add-user.component';
 
 const routes: VexRoutes = [
   {
@@ -95,6 +97,16 @@ const routes: VexRoutes = [
           {
             path: 'sub-category-management',
             component: SubCategoryListComponent,
+            canActivate: [AuthGuardService]
+          },
+          {
+            path: 'list-users',
+            component: ListUsersComponent,
+            canActivate: [AuthGuardService]
+          },
+          {
+            path: 'add-user',
+            component: AddUserComponent,
             canActivate: [AuthGuardService]
           },
           // {

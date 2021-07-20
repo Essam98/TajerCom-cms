@@ -1,0 +1,113 @@
+<header class="headerModal  d-flex justify-content-between p-5 py-3  ">
+    <div class="titleModal">
+        <h2 *ngIf="!isModeUpdate"> Add New User </h2>
+        <h2 *ngIf="isModeUpdate"> Update {{ get('name').value }} User </h2>
+    </div>
+    <div class="dismissModal">
+    </div>
+</header>
+
+<main class="main">
+
+    <form [formGroup]="form" ngForm="form">
+
+        <div class="container">
+            <div class="row">
+
+                <div class="body-form mt-5 w-100 card">
+                    <div class="row container py-4 ">
+
+                        <div class="col-md-12 py-3">
+                            <h3>User Details Form</h3>
+                        </div>
+
+                        <!-- name -->
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100 mt-2">
+                                <mat-label> Name </mat-label>
+                                <input matInput formControlName="name" autocomplete="off">
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                            
+                        </div>
+    
+                        <!-- address -->
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100 mt-2">
+                                <mat-label> Address </mat-label>
+                                <input matInput formControlName="address" autocomplete="off">
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+
+                        <!-- phoneNumber -->
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100 mt-2">
+                                <mat-label> Phone Name </mat-label>
+                                <input matInput formControlName="phoneNumber" autocomplete="off">
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Birthday -->
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100 mt-2">
+                                <mat-label> Birthday </mat-label>
+                                <input matInput type="date" formControlName="birthday" autocomplete="off">
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- longitude -->
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100 mt-2">
+                                <mat-label> Longitude </mat-label>
+                                <input matInput type="number" formControlName="longitude" autocomplete="off">
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- latitude -->
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="w-100 mt-2">
+                                <mat-label> Latitude </mat-label>
+                                <input (change)="changeLocation()" type="number" matInput formControlName="latitude" autocomplete="off" >
+                                <mat-error>This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="agm-container">
+                            <agm-map 
+                                [latitude]="this.get('latitude').value" 
+                                [longitude]="this.get('longitude').value" 
+                                [zoom]="zoom">
+                                <agm-marker 
+                                    (dragEnd)="locationChanged($event)" 
+                                    [latitude]="this.get('latitude').value" 
+                                    [longitude]="this.get('longitude').value"
+                                    [markerDraggable]="true">
+                                </agm-marker>
+                              </agm-map>
+                        </div>
+                        
+                        
+                        <div class="container buttonsModal w-100 text-right ">
+                            <button *ngIf="!isModeUpdate" (click)="create()" class="btn m-3 create-category"> Create </button>
+                            <button *ngIf="isModeUpdate" (click)="update()" class="btn m-3 create-category"> Update </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+
+    
+
+</main>
+
+

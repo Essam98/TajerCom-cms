@@ -9,8 +9,12 @@ export class LoginService {
 
   constructor() { }
 
+
+  // ash_tajer@tajer.com
+  // a$hraf
+
   login(login: any) {
-    if (login.email == "ash_tajer@tajer.com" && login.password == "a$hraf") {
+    if (login.email == "ash" && login.password == "123") {
       return true;
     } else {
       return false
