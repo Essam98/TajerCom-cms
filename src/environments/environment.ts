@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  ApiURL : '',
-  ApiNode: "http://localhost:5000/api/tajer/"
+  production: true,
+  ApiURL : 'https://tajer-com.herokuapp.com/',
+  ApiNode: "https://tajer-com.herokuapp.com/api/tajer/"
 };
 
 /*

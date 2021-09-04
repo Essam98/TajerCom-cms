@@ -168,6 +168,13 @@ export class AppComponent {
               }
             ]
           },
+          {
+            type: 'link',
+            label: 'Orders',
+            route: '/apps/list-orders',
+            icon: icLayers,
+            routerLinkActiveOptions: { exact: true }
+          },
 
           // {
           //   type: 'link',

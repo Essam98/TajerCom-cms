@@ -3,8 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { ProductService } from 'src/@vex/services/product.service';
 import { Product } from 'src/app/services/modal/category';
-import { AddProductComponent } from '../add-product/add-product.component';
-import { UpdateProductComponent } from '../update-product/update-product.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'vex-product-list',
@@ -20,7 +19,6 @@ export class ProductListComponent implements OnInit {
   ];
 
   constructor(
-    private modalController: ModalController,
     private alertController: AlertController,
     private matSnackBar: MatSnackBar,
     private loadingController: LoadingController,
@@ -37,7 +35,7 @@ export class ProductListComponent implements OnInit {
     })
   }
 
-  getImageUrl = (image: string) => image ? "http://localhost:5000/" + image : "../../../../assets/img/demo/images.jpg";
+  getImageUrl = (image: string) => image ? environment.ApiURL + image : "../../../../assets/img/demo/images.jpg";
   
 
   async onDeleteProduct(product: Product) {

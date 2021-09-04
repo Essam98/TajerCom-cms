@@ -30,7 +30,9 @@ import { AddSubCategoryComponent } from 'src/@vex/components/Sub_Category_Manage
 import { UpdateSubCategoryComponent } from 'src/@vex/components/Sub_Category_Management/update-sub-category/update-sub-category.component';
 import { ListUsersComponent } from 'src/@vex/components/Users_Management/list-users/list-users.component';
 import { AddUserComponent } from 'src/@vex/components/Users_Management/add-user/add-user.component';
-import { AgmCoreModule } from '@agm/core'
+import { AgmCoreModule } from '@agm/core';
+import { ListOrdersComponent } from '../@vex/components/order/list-orders/list-orders.component';
+import { OrderViewComponent } from '../@vex/components/order/order-view/order-view.component'
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import { AgmCoreModule } from '@agm/core'
     UpdateSubCategoryComponent,
     ListUsersComponent,
     AddUserComponent,
+    ListOrdersComponent,
+    OrderViewComponent,
   ],
   entryComponents: [
     AddCategoryComponent,

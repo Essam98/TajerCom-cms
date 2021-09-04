@@ -93,7 +93,7 @@ export class UpdateCategoryComponent implements OnInit {
 
 
 
-  getImageUrl = (image) => image ? 'http://localhost:5000/' + image : '../../../../assets/img/demo/images.jpg';
+  getImageUrl = (image) => image ? environment.ApiURL + image : '../../../../assets/img/demo/images.jpg';
 
 
 }

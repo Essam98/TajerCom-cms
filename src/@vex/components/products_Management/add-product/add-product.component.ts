@@ -7,6 +7,7 @@ import { ProductService } from 'src/@vex/services/product.service';
 import { subCategoryService } from 'src/@vex/services/sub-category.service';
 import { Category, Product } from 'src/app/services/modal/category';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'vex-add-product',
@@ -52,10 +53,11 @@ export class AddProductComponent implements OnInit {
 
     this.listAllSubCategories();
     this.route.queryParams.subscribe(result => {
+      if (!result.id) return;
       this.productService.getProductById(result.id).subscribe(result => {
 
         this.updateProduct = result
-        this.fileImageUrl = "http://localhost:5000/" + result?.image
+        this.fileImageUrl = environment.ApiURL + result?.image
         this.objectImage = result?.image
         
         // Bind All Product Values 

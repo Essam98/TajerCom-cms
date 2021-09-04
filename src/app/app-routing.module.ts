@@ -10,6 +10,8 @@ import { SubCategoryListComponent } from 'src/@vex/components/Sub_Category_Manag
 import { AddProductComponent } from 'src/@vex/components/products_Management/add-product/add-product.component';
 import { ListUsersComponent } from 'src/@vex/components/Users_Management/list-users/list-users.component';
 import { AddUserComponent } from 'src/@vex/components/Users_Management/add-user/add-user.component';
+import { ListOrdersComponent } from 'src/@vex/components/order/list-orders/list-orders.component';
+import { OrderViewComponent } from 'src/@vex/components/order/order-view/order-view.component';
 
 const routes: VexRoutes = [
   {
@@ -107,6 +109,16 @@ const routes: VexRoutes = [
           {
             path: 'add-user',
             component: AddUserComponent,
+            canActivate: [AuthGuardService]
+          },
+          {
+            path: 'list-orders',
+            component: ListOrdersComponent,
+            canActivate: [AuthGuardService]
+          },
+          {
+            path: 'order-view',
+            component: OrderViewComponent,
             canActivate: [AuthGuardService]
           },
           // {

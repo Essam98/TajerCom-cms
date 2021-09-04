@@ -1,0 +1,70 @@
+<div class="headerPage">
+
+    <h2 class="p-5"> Orders Management </h2>
+
+    <div class="container">
+
+      <div class="container header-table d-flex justify-content-between">
+        <h5> Orders Details </h5>
+ 
+        <div class="add-category">
+            <button [routerLink]="['/apps/add-user']" class="btn"> <i class="bi bi-plus-lg"></i></button>
+        </div>
+   </div>
+
+    <table mat-table [dataSource]="dataSource" class="container mat-elevation-z8">
+      
+        <!-- name Column -->
+        <ng-container matColumnDef="name">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> User Name </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- phoneNumber Column -->
+        <ng-container matColumnDef="phoneNumber">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Phone Number </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> 
+            <a href="https://api.whatsapp.com/send?phone={{element.phoneNumber}}" target="_blank">
+              {{element.phoneNumber}}
+            </a> 
+          </td>
+        </ng-container>
+
+        <!-- totalPrice Column -->
+        <ng-container matColumnDef="totalPrice">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Total Price </th>
+            <td class="text-center" mat-cell *matCellDef="let element"> {{ element?.totalPrice}} </td>
+          </ng-container>
+        
+      
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Status </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{ element.status }} </td>
+        </ng-container>
+      
+
+        <!-- view -->
+        <ng-container matColumnDef="view">
+            <th class="text-right" mat-header-cell *matHeaderCellDef> View </th>
+            <td class="text-right" mat-cell *matCellDef="let element"> 
+  
+              <button class="btn btn-primary">
+                <i [routerLink]="['/apps/order-view']" [queryParams]="{ id: element._id }" class="bi bi-eye-fill"></i>
+              </button>
+              
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      
+
+    </div>
+
+
+      
+    
+</div>

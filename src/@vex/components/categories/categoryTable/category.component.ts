@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators/map'
 import { Category } from 'src/app/services/modal/category';
 import { UpdateCategoryComponent } from '../update-category/update-category.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'vex-category',
@@ -59,7 +60,7 @@ export class CategoryComponent implements OnInit {
     loading.dismiss();
   }
   
-  getImageUrl = (image: string): string => image ? 'http://localhost:5000/' + image : '../../../../assets/img/demo/images.jpg'
+  getImageUrl = (image: string): string => image ? environment.ApiURL + image : '../../../../assets/img/demo/images.jpg'
   
 
   async onDeleteCategory(categoryObject: Category) {

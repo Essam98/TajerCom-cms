@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { CategoryService } from 'src/@vex/services/category.service';
 import { subCategoryService } from 'src/@vex/services/sub-category.service';
 import { Category } from 'src/app/services/modal/category';
+import { environment } from 'src/environments/environment';
 import { AddSubCategoryComponent } from '../add-sub-category/add-sub-category.component';
 import { UpdateSubCategoryComponent } from '../update-sub-category/update-sub-category.component';
 
@@ -98,7 +99,7 @@ export class SubCategoryListComponent implements OnInit {
   }
 
   getFileUrl(image) {
-    return image ? 'http://localhost:5000/' + image : "../../../../assets/img/demo/images.jpg";
+    return image ? environment.ApiURL + image : "../../../../assets/img/demo/images.jpg";
   }
 
   async onUpdateCategory(subCategory) {
